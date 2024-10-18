@@ -15,9 +15,21 @@
 }
 
 body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.theme{
+  transition: 1s all ease;
+}
+
+.dark {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+.light {
+  color: var(--background);
+  background: var(--foreground);
 }
 
 @layer utilities {
