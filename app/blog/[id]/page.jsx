@@ -1,14 +1,28 @@
 import React from 'react';
 import userPic from "@/public/1.png";
 import Image from 'next/image';
+import { notFound } from 'next/navigation';
 
-const Post = () => {
+async function getData(id) {
+    const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+        cache: "no-store",
+    });
+
+    if (!res.ok) {
+        return notFound();
+    }
+    return res.json();
+}
+
+const Post = async ({params}) => {
+    const data = await getData(params.id);
+
     return (
         <div>
             <div className="flex gap-12 items-center mt-12">
                 <div className="flex-grow flex flex-col gap-8">
-                    <h2 className="text-5xl font-bold">Blog Title</h2>
-                    <p className="text-xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam deserunt et in tenetur mollitia rerum, temporibus eligendi aut sit voluptatem iure excepturi dolores praesentium obcaecati! Eum, recusandae? Accusamus, necessitatibus autem.</p>
+                    <h2 className="text-5xl font-bold">{data.title}</h2>
+                    <p className="text-xl">{data.body}</p>
                     <div className="flex gap-4 items-center">
                         <Image className="rounded-full" src={userPic} alt="User Pic" />
                         <h3 className="font-semibold">Kawsar Ahmed</h3>
